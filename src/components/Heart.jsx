@@ -6,65 +6,23 @@ Heart by Quaternius (https://poly.pizza/m/1yCRUwFnwX)
 
 import { useRef, useEffect } from "react";
 import { useGLTF, useScroll } from "@react-three/drei";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useControls } from "leva";
+import { useExplode } from "../hooks/useExplode";
 
 export function Heart(props) {
   const { nodes, materials } = useGLTF("/models/heart.glb");
   const group = useRef();
-  const scrollData = useScroll();
 
-  useEffect(() => {
-    const groupWorldPosition = new THREE.Vector3();
-    group.current.getWorldPosition(groupWorldPosition);
-
-    group.current.children.forEach((mesh) => {
-      mesh.originalPosition = mesh.position.clone();
-      const meshWorldPosition = new THREE.Vector3();
-      mesh.getWorldPosition(meshWorldPosition);
-
-      mesh.directionVector = meshWorldPosition
-        .clone()
-        .sub(groupWorldPosition)
-        .normalize();
-      mesh.targetPosition = mesh.originalPosition
-        .clone()
-        .add(mesh.directionVector.clone().multiplyScalar(3));
-    });
-  }, []);
-
-  useFrame(() => {
-    group.current.children.forEach((mesh) => {
-      if (scrollData.offset < 0.0001) {
-        if (mesh.name === "origin") {
-          mesh.visible = true;
-        } else {
-          mesh.visible = false;
-        }
-      } else {
-        if (mesh.name === "origin") {
-          mesh.visible = false;
-        } else {
-          mesh.visible = true;
-        }
-      }
-
-      mesh.position.x = THREE.MathUtils.lerp(
-        mesh.originalPosition.x,
-        mesh.targetPosition.x,
-        scrollData.offset // 0 at the beginning and 1 after scroll
-      );
-      mesh.position.y = THREE.MathUtils.lerp(
-        mesh.originalPosition.y,
-        mesh.targetPosition.y,
-        scrollData.offset // 0 at the beginning and 1 after scroll
-      );
-      mesh.position.z = THREE.MathUtils.lerp(
-        mesh.originalPosition.z,
-        mesh.targetPosition.z,
-        scrollData.offset // 0 at the beginning and 1 after scroll
-      );
-    });
+  const { heart } = useControls({
+    bluebirddistance: {
+      value: 2.4,
+      min: 0,
+      max: 10,
+    },
+  });
+  useExplode(group, {
+    distance: heart,
+    rotationEnabled: true,
   });
 
   return (
