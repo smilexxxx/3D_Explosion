@@ -4,8 +4,8 @@ Command: npx gltfjsx@6.2.16 public/models/banana.glb -o src/components/Banana.js
 Banana by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/ahOO6wz8sV0)
 */
 
+import { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import React, { useRef } from "react";
 import { useExplode } from "../hooks/useExplode";
 
 export function Banana(props) {

@@ -1,15 +1,16 @@
 import {
-  Billboard,
   Environment,
   Float,
   OrbitControls,
-  useTexture,
+  //Billboard,
+  //useTexture,
 } from "@react-three/drei";
 
 import { useControls } from "leva";
 import { Heart } from "./Heart";
 import { Banana } from "./Banana";
 import { WesternBlueBird } from "./WesternBlueBird";
+import { Skull } from "./Skull";
 
 export const Experience = () => {
   // const xLogo = useTexture("/textures/x-logo.png");
@@ -17,7 +18,7 @@ export const Experience = () => {
   const { item } = useControls({
     item: {
       value: "heart",
-      options: ["heart", "banana", "westernbluebird"],
+      options: ["heart", "banana", "westernbluebird", "skull"],
     },
   });
 
@@ -27,6 +28,7 @@ export const Experience = () => {
       <Float floatIntensity={2} speed={3}>
         <Heart scale={0.25} visible={item === "heart"} />
         <Banana scale={0.15} visible={item === "banana"} />
+        <Skull scale={0.23} visible={item === "skull"} />
         <WesternBlueBird
           scale={0.3}
           rotation-y={-Math.PI / 4}

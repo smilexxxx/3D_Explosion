@@ -4,8 +4,8 @@ Command: npx gltfjsx@6.2.16 public/models/heart.glb -o src/components/Heart.jsx 
 Heart by Quaternius (https://poly.pizza/m/1yCRUwFnwX)
 */
 
-import { useRef, useEffect } from "react";
-import { useGLTF, useScroll } from "@react-three/drei";
+import { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
 import { useExplode } from "../hooks/useExplode";
 
